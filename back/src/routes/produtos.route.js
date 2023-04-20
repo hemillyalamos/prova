@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/produtos", produtos.listar);
 router.get("/produtos/:info", produtos.buscar);
-router.get("/produtos", produtos.adicionar);
+router.post("/produtos", produtos.adicionar);
 
 
 module.exports = router;

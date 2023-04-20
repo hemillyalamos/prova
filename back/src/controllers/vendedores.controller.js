@@ -1,21 +1,13 @@
 const con = require("../dao/connect");
 
-const adicionar = (req, res) => {
-    const { id, nome, matricula,  } = req.body;
-
-    let query = `INSERT INTO vendedores 
-                 VALUES (DEFAULT, '${ id }',${nome}', '${matricula}')`;
-
-    con.query(query, (err, response) => {
-        console.log(err, response);
-        if(err == undefined) {
-            res.status(201).json(response).end();
-        }else {
-            let { sqlMessage, sqlState } = err;
-
-            res.status(400).json({ sqlMessage, sqlState }).end();
-        }
-    });
+const cadastrar = (req, res) => {
+    let vendedor = new Vendedor(req.body)
+    con.query(vendedor.create(), (err, result) => {
+        if (err == null)
+            res.status(201).end()
+        else
+            res.status(500).json(err).end()
+    })
 }
 
 const listar = (req, res) => {
@@ -29,11 +21,20 @@ const listar = (req, res) => {
         }
     })
 }
-
+const alterar = (req, res) => {
+    let vendedor = new Vendedor(req.body)
+    con.query(vendedor.update(), (err, result) => {
+        if (result.affectedRows > 0)
+            res.status(202).end()
+        else
+            res.status(404).end()
+    })
+}
 
 
 module.exports = {
-    adicionar,
-    listar
+    cadastrar,
+    listar,
+    alterar
    
 }

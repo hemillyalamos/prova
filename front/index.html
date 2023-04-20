@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="ico.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Loja</title>
+</head>
+
+<body onload="carregar()">
+    <header>
+        <h1>Loja</h1>
+        <button onclick="modal1.classList.remove('oculto')">Nova venda</button>
+        <div id="modal1" class="modal1 oculto">
+            <form id="novo">
+                <header style="grid-column-end: span 2;">
+                    <h1>Cadastro de Produtos</h1>
+                </header>
+                <label for="Produto">Produto:</label>
+                <input type="text" name="id_produto" id="id_produto" placeholder="Digite o id do produto" required>
+                <label for="data">Data da compra:</label>
+                <input type="date" name="data" id="data" required>
+                <label for="quant">Quantidade:</label>
+                <input type="number" name="quant" id="quant" min="0" value="0" step="0.01" required>
+                <label for="Vendedores">Vendedor:</label>
+                <input type="text" name="id_vendedor" id="id_vendedor" placeholder="Digite o id do Vendedor" required>
+                
+                <input type="reset" value="Cancelar" onclick="modal1.classList.add('oculto')">
+                <input type="submit" value="Cadastrar">
+            </form>
+        </div>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <th>Id</th>
+                <th>Produto</th>
+                <th>Vendedor</th>
+                <th>Quantidade</th>
+                <th>Data da compra</th>
+                <th>Valor</th>
+                <th>Total</th>
+                <th>Atualizar</th>
+                <th><button onclick="excluir">Excluir</button></th>
+            </thead>
+            <tbody id="corpo"></tbody>
+        </table>
+    </main>
+    <footer><h2 id="total">Total :</h2></footer>
+</body>
+<script src="scripts/script.js"></script>
+
+</html
+
+ 

@@ -12,45 +12,28 @@ const listar = (req, res) => {
     })
 }
 
-const buscar = (req, res) => {
-    const { info } = req.params;
-
-    let query = `SELECT * FROM produtos WHERE produto LIKE '%${info}%' OR valor LIKE '%${info}%'`;
-
-    con.query(query, (err, response) => {
-        if(err == undefined) {
-            res.status(200).json(response).end();
-        }else {
-            res.status(400).json(err).end();
-        }
-    });
-}
-
 const adicionar = (req, res) => {
-    let {id_produto, valor, produto, } = req.body;
-
-    valor = (produto != undefined) ? id_produto : 0;
-    valor = (valor != undefined) ? valor : 0;
-
-    if((valor == 0) && (produto == 0)) {
-        res.status(400).json({"msg":"Necessario inserir um valor de venda"});
-    }else {
-        let query = `INSERT INTO produtos VALUES (DEFAULT, ${id_produto}, "${valor}", "${produto}" 1);`;
-    
-        con.query(query, (err, response) => {
-            if(err == undefined) {
-                res.status(200).json(response).end();
-            }else {
-                res.status(400).json(err).end();
-            }
-        })
-    }
+    let produto = new Produto(req.body)
+    con.query(produto.create(), (err, result) => {
+        if (err == null)
+            res.status(201).end()
+        else
+            res.status(500).json(err).end()
+    })
 }
-
+const excluir = (req, res) => {
+    let produto = new Produto(req.params)
+    con.query(produto.delete(), (err, result) => {
+        if (result.affectedRows > 0)
+            res.status(204).end()
+        else
+            res.status(404).end()
+    })
+}
 
 module.exports = {
     listar,
-    buscar,
-    adicionar
+    adicionar,
+    excluir
 
 }
